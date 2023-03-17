@@ -17,15 +17,20 @@
 
 extern App_Action action;
 
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
+
+	if (hadc->Instance == ADC4) {
+		buzzer_change_volume(action.player, adc_get_scaled_value(action.adc_manager));
+		adc_start(action.adc_manager);
+	}
+}
+
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	if (htim->Instance == TIM2) {
 		HAL_TIM_Base_Stop_IT(htim);
 		timer_2_did_triggered(&action, HAL_GetTick());
 		HAL_TIM_Base_Start_IT(htim);
-	} else if (htim->Instance == TIM3) {
-//		extern Buzzer_Player player;
-//		buzzer_play_if_possible(&player);
-	}
+	} else if (htim->Instance == TIM3) {}
 }
 
 ////////////////////////////////////////////////////////////////
@@ -47,12 +52,9 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 }
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
-
-	HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_12);
 	extern App_Action action;
 
 	if(huart->Instance == USART1) {
-		HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_13);
 		uart_did_received_message(&action);
 	}
 

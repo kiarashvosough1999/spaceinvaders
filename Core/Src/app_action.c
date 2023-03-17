@@ -41,7 +41,8 @@ void init_app_action(
 		KeyPad_Manager* keypad_manager,
 		Page_Printer* printer,
 		UART_Manager* uart_manager,
-		Buzzer_Player* player
+		Buzzer_Player* player,
+		ADC_Manager* adc_manager
 		) {
 	App_Action new_action = {
 			time_manager,
@@ -50,6 +51,7 @@ void init_app_action(
 			uart_manager,
 			printer,
 			player,
+			adc_manager,
 			NULL
 	};
 	*action = new_action;
@@ -82,7 +84,7 @@ void uart_did_received_message(App_Action* action) {
 }
 
 void button_pressed(App_Action* action, Buttons button) {
-
+	set_pressed_button(action->keypad_manager, button);
 	switch(button) {
 	case one:
 		button_one_action_handler(action);
@@ -154,11 +156,14 @@ static void change_page(App_Action* action, Page page) {
 		print_choose_level_page(action->printer);
 		break;
 	case game:;
+	    adc_stop(action->adc_manager);
 	    buzzer_pause(action->player);
 		Board_Character** board = action->logic->current_board;
 		print_game_page(action->printer, board);
 		break;
 	case player_win:
+		buzzer_play(action->player);
+		adc_start(action->adc_manager);
 		print_player_win_page(action->printer, action->game_config_state->player_points);
 		break;
 	case enemy_win:
@@ -240,6 +245,12 @@ static void button_D_action_handler(App_Action* action) {
 	Page current_page = get_current_page(action->printer);
 	if (current_page == game) {
 		user_did_shot(action->logic, action->game_config_state->hardness_level);
+	} else if(current_page == enter_name) {
+		char letter = get_alphabetic_char_with_offset(action->keypad_manager);
+		char* name = action->game_config_state->player_name;
+		strncat(name, &letter, 1);
+		set_player_name(action->game_config_state, name);
+		change_page(action, enter_name);
 	}
 }
 

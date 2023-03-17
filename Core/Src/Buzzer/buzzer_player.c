@@ -14,7 +14,7 @@ void init_buzzer_player(Buzzer_Player* player, TIM_HandleTypeDef *buzzerPwmTimer
 			buzzerPwmTimer,
 			buzzerPwmChannel,
 			play,
-			100,
+			0,
 			0,
 			sizeof(imperialmarch)/sizeof(imperialmarch[0]),
 			0

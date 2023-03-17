@@ -16,7 +16,8 @@ void init_game_configuration_state(Game_Configuration_State* state) {
 			"",
 			false,
 			easy,
-			0
+			0,
+			false
 	};
 	*state = new_state;
 }
@@ -44,8 +45,13 @@ void add_point_(Game_Configuration_State* state, int point) {
 	state->player_points += point;
 }
 
+void set_is_playing(Game_Configuration_State* state, bool is_playing) {
+	state->is_playing = is_playing;
+}
 
-
+bool get_is_playing(Game_Configuration_State* state) {
+	return state->is_playing;
+}
 
 
 
