@@ -44,7 +44,7 @@ void remove_all_chars(char* str, char c) {
 void get_received_message(UART_Manager* manager, char message[10]) {
 	char new_message[10];
 	strcpy(new_message, manager->received_data);
-//	remove_all_chars(new_message, '*');
+	remove_all_chars(new_message, '*');
 	strcpy(message, new_message);
 }
 

@@ -15,6 +15,7 @@
 #include "Managers/uart_manager.h"
 #include <game_logic.h>
 #include <Buzzer/buzzer_player.h>
+#include <Managers/adc_manager.h>
 
 typedef struct {
 	Time_Manager* time_manager;
@@ -23,6 +24,7 @@ typedef struct {
 	UART_Manager* uart_manager;
 	Page_Printer* printer;
 	Buzzer_Player* player;
+	ADC_Manager* adc_manager;
 	Game_Logic* logic;
 } App_Action;
 
@@ -32,7 +34,8 @@ void init_app_action(App_Action* action,
 		KeyPad_Manager* keypad_manager,
 		Page_Printer* printer,
 		UART_Manager* uart_manager,
-		Buzzer_Player* player
+		Buzzer_Player* player,
+		ADC_Manager* adc_manager
 		);
 
 void timer_2_did_triggered(App_Action* action, int current_time);

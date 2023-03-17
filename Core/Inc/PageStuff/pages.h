@@ -12,7 +12,7 @@ typedef enum {
 	none_page = -1,
 	splash = 0,
 	about = 1,
-	start_game  =2,
+	start_game  = 2,
 	enter_name = 3,
 	choose_level = 4,
 	game = 5,

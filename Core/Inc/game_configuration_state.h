@@ -18,7 +18,7 @@ typedef struct {
 	bool is_player_name_set;
 	Game_Level hardness_level;
 	int player_points;
-
+	bool is_playing;
 } Game_Configuration_State;
 
 void init_game_configuration_state(Game_Configuration_State* state);
@@ -32,5 +32,9 @@ void get_player_name(Game_Configuration_State* state, char player_name[10]);
 void set_hardness_level(Game_Configuration_State* state, Game_Level level);
 
 void add_point_(Game_Configuration_State* state, int point);
+
+void set_is_playing(Game_Configuration_State* state, bool is_playing);
+
+bool get_is_playing(Game_Configuration_State* state);
 
 #endif /* INC_GAME_CONFIGURATION_STATE_H_ */

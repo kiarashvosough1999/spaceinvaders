@@ -15,11 +15,13 @@ typedef enum {
 } Buttons;
 
 typedef struct {
-
+	Buttons current_pressed_buttons;
+	int char_offset; // 0...2
 } KeyPad_Manager;
 
 void init_keypad_manager(KeyPad_Manager *manager);
-
 void find_button(KeyPad_Manager *manager, uint16_t GPIO_Pin);
+void set_pressed_button(KeyPad_Manager *manager, Buttons button);
+char get_alphabetic_char_with_offset(KeyPad_Manager *manager);
 
 #endif /* INC_KEYPAD_MANAGER_H_ */
