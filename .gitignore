@@ -356,6 +356,7 @@ Drivers/
 Drivers
 .metadata
 .metadata/**
+.setting
 
 # End of 
 https://www.toptal.com/developers/gitignore/api/macos,clion,clion+all,clion+iml,c++,c
